@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Game</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  </head>
+  <body>
+    <div id="main" class="main">
+      <div class="column">
+        <table id="table" class="table">
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="column">
+        <div class="row">
+          <div class="tcolumn">
+            <div class="row">
+              <div class="row">
+                <div id="side-bar" class="sidebar"></div>
+              </div>
+              <div class="row">
+                <div class="t2column"></div>
+              </div>
+            </div>
+          </div>
+          <div class="t2column">
+            <div class="season-container">
+              <div
+                class="row"
+                style="margin-top: 0.5rem; margin-bottom: 0.5rem"
+              >
+                <div class="t45column" style="justify-content: center">
+                  <div class="spring-container">
+                    <p class="season-text">Tavasz</p>
+                    <p class="season-text" id="spring-points">0</p>
+                  </div>
+                </div>
+                <div class="t45column" style="justify-content: center">
+                  <div class="summer-container">
+                    <p class="season-text">Nyár</p>
+                    <p class="season-text" id="summer-points">0</p>
+                  </div>
+                </div>
+              </div>
+              <div class="t10column">
+                <div id="timer" class="timer">
+                  <img
+                    class="hourglass"
+                    src="./assets/hourglass.png"
+                    alt="hourglass"
+                  />
+
+                  <p id="time" class="timer-text"></p>
+                </div>
+              </div>
+
+              <div
+                class="row"
+                style="margin-top: 0.5rem; margin-bottom: 0.5rem"
+              >
+                <div class="t45column" style="justify-content: center">
+                  <div class="autumn-container">
+                    <p class="season-text">Ősz</p>
+                    <p class="season-text" id="autumn-points">0</p>
+                  </div>
+                </div>
+                <div class="t45column" style="justify-content: center">
+                  <div class="winter-container">
+                    <p class="season-text">Tél</p>
+                    <p class="season-text" id="winter-points">0</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="button-container">
+            <button class="button" id="rotate">Forgat (F)</button>
+            <button class="button" id="mirror">Tükröz (T)</button>
+            <button class="button" id="restart">Újra (2xR)</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="quest-bar" class="quest-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src=".\script.js"></script>
+  </body>
+</html>
