@@ -107,6 +107,39 @@ body::-webkit-scrollbar {
 .valid-cell{
     border: 0.3vw solid green;
 }
+.seed-container{
+    background-color: #c58e2ec1;
+    border-radius: 1vw;
+    padding: 0.5vw;
+    margin: 0.5vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+.seed-form{
+    background-color: #c58e2ec1;
+    border-radius: 1vw;
+    padding: 0.5vw;
+    margin: 0.5vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    display: inline-block;
+}
+.container{
+    background-color: rgba(55, 54, 54, 0.903);
+    border-radius: 1vw;
+    padding: 0.5vw;
+    margin: 0.5vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    display: inline-block;
+}
+.seed-text{
+    color: black;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-align: center;
+}
 .button-container{
     background-color: rgba(55, 54, 54, 0.903);
     border-radius: 1vw;

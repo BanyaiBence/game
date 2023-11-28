@@ -553,6 +553,10 @@ const summerPointsE = document.getElementById("summer-points");
 const autumnPointsE = document.getElementById("autumn-points");
 const winterPointsE = document.getElementById("winter-points");
 const restartButton = document.getElementById("restart");
+const seedButton = document.getElementById("seed-button");
+const seedContainer = document.getElementById("seed");
+const seedInput = document.getElementById("seed-input");
+const seedLoadButton = document.getElementById("seed-load");
 
 // Global variables
 
@@ -604,29 +608,10 @@ function resetData() {
   tileToWiggle = { x: 0, y: 0 };
   tileToDodge = { x: 0, y: 0 };
   tileToRotate = { x: 0, y: 0 };
-  quests = getMissions();
+  currentSeason = 0;
 
-  for (mission of missions.basic) {
-    mission.points = 0;
-  }
-  for (mission of missions.extra) {
-    mission.points = 0;
-  }
+  init();
 
-  for (let i = 0; i < TALBE_SIZE; i++) {
-    tableContent.push([]);
-    for (let j = 0; j < TALBE_SIZE; j++) {
-      tableContent[i].push(0);
-    }
-  }
-  // Add the mountains
-  tableContent[1][1] = "mountain";
-  tableContent[3][8] = "mountain";
-  tableContent[5][3] = "mountain";
-  tableContent[8][9] = "mountain";
-  tableContent[9][5] = "mountain";
-
-  mixShapes();
   currentShape = shapes[0];
   changeQuests();
 }
@@ -647,8 +632,7 @@ function getMissions() {
   const missionList = [];
   const basicMissionList = missions.basic;
   const extraMissionList = missions.extra;
-  console.log(basicMissionList);
-  console.log(extraMissionList);
+
   const rndIdxListBasic = [];
   const rndIdxListExtra = [];
   for (let i = 0; i < 2; i++) {
@@ -682,9 +666,7 @@ function init() {
   tableContent[8][9] = "mountain";
   tableContent[9][5] = "mountain";
 
-  mixShapes();
-
-  currentShape = shapes[0];
+  contentFromSeed(generateSeed());
 
   changeQuests();
 
@@ -696,6 +678,13 @@ function init() {
 }
 
 // Event listeners
+
+seedLoadButton.addEventListener("click", () => {
+  seed = seedInput.value;
+  seedContainer.innerHTML = seed;
+  contentFromSeed(seed);
+  draw();
+});
 
 restartButton.addEventListener("click", () => {
   restart();
@@ -720,6 +709,14 @@ document.addEventListener("click", (event) => {
     settleShape();
   }
   draw();
+});
+
+seedButton.addEventListener("click", () => {
+  localStorage.clear();
+  resetData();
+  seed = generateSeed();
+  seedContainer.innerHTML = seed;
+  contentFromSeed(seed);
 });
 
 // This will listen to the restart button, but will only restart the game if the button was pressed twice in a short time and holding the button down will not trigger the restart
@@ -1401,18 +1398,15 @@ function settleShape() {
     winterPoints = globalPoints;
     globalPoints = 0;
   } else if (timeLeft <= 7) {
-    mixShapes();
     currentSeason = 3;
     autumnPoints = globalPoints;
 
     globalPoints = 0;
   } else if (timeLeft <= 14) {
-    mixShapes();
     currentSeason = 2;
     summerPoints = globalPoints;
     globalPoints = 0;
   } else if (timeLeft <= 21) {
-    mixShapes();
     currentSeason = 1;
     springPoints = globalPoints;
     globalPoints = 0;
@@ -1430,6 +1424,76 @@ function settleShape() {
   if (timeLeft <= 0) {
     gameOver();
   }
+}
+
+function objectToSeed(obj) {
+  len = obj.length;
+  idxs = [];
+  // Fill the array with numbers from 0 to n
+  for (let i = 0; i < len; i++) {
+    idxs.push(i);
+  }
+  // Perform Fisher-Yates shuffle
+  for (let i = idxs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [idxs[i], idxs[j]] = [idxs[j], idxs[i]]; // Swap elements
+  }
+  seed = idxs.join("-");
+  return seed;
+}
+
+function generateShapeSeed() {
+  return objectToSeed(default_shapes);
+}
+function generateQuestSeed() {
+  let basicQuestSeed = objectToSeed(missions.basic);
+  let extraQuestSeed = objectToSeed(missions.extra);
+  q1 = basicQuestSeed.split("-")[0];
+  q2 = basicQuestSeed.split("-")[1];
+  q3 = extraQuestSeed.split("-")[0];
+  q4 = extraQuestSeed.split("-")[1];
+  seed = q1 + "-" + q2 + "/" + q3 + "-" + q4;
+
+  return seed;
+}
+
+// Seed generation for multiplayer
+function generateSeed() {
+  let seed = "";
+  for (i = 0; i < 4; i++) {
+    seed += generateShapeSeed();
+    seed += "/";
+  }
+  seed = seed.slice(0, -1);
+  seed += "x";
+  seed += generateQuestSeed();
+
+  return seed;
+}
+function contentFromSeed(seed) {
+  shapes = [];
+  quests = [];
+  const shapeSeeds = seed.split("x")[0].split("/");
+  const questSeeds = seed.split("x")[1].split("/");
+  for (shapeSeed of shapeSeeds) {
+    for (let i = 0; i < shapeSeed.length; i++) {
+      shapes.push(default_shapes[shapeSeed[i]]);
+    }
+  }
+
+  basicQuestSeed = questSeeds[0].split("-");
+  extraQuestSeed = questSeeds[1].split("-");
+  const basicQuest1 = missions.basic[basicQuestSeed[0]];
+  const basicQuest2 = missions.basic[basicQuestSeed[1]];
+  const extraQuest1 = missions.extra[extraQuestSeed[0]];
+  const extraQuest2 = missions.extra[extraQuestSeed[1]];
+
+  quests.push(basicQuest1);
+  quests.push(basicQuest2);
+  quests.push(extraQuest1);
+  quests.push(extraQuest2);
+
+  currentShape = shapes[0];
 }
 
 // Random animations for a bit of fun
