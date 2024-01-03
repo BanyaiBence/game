@@ -1427,7 +1427,7 @@ function settleShape() {
   }
   saveGame();
   if (timeLeft <= 0) {
-    gameOver();
+    gameOver(); //
   }
 }
 
