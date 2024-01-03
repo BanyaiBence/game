@@ -671,7 +671,11 @@ function init() {
   changeQuests();
 
   if (checkLocalStorageForGame()) {
-    loadGame();
+    try {
+      loadGame();
+    } catch {
+      localStorage.clear();
+    }
   }
   initDraw();
   draw();
@@ -680,6 +684,7 @@ function init() {
 // Event listeners
 
 seedLoadButton.addEventListener("click", () => {
+  localStorage.clear();
   seed = seedInput.value;
   seedContainer.innerHTML = seed;
   contentFromSeed(seed);
@@ -1476,6 +1481,7 @@ function contentFromSeed(seed) {
   const shapeSeeds = seed.split("x")[0].split("/");
   const questSeeds = seed.split("x")[1].split("/");
   for (shapeSeed of shapeSeeds) {
+    shapeSeed = shapeSeed.split("-");
     for (let i = 0; i < shapeSeed.length; i++) {
       shapes.push(default_shapes[shapeSeed[i]]);
     }
