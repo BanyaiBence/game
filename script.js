@@ -762,13 +762,13 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     if (event.key === "r") {
-      if (justPressedRestart) {
+      if (keyRepeat.justPressedRestart) {
         restart();
       }
-      justPressedRestart = true;
-      clearTimeout(justPressedRestartTimeout);
+      keyRepeat.justPressedRestart = true;
+      clearTimeout(keyRepeat.justPressedRestartTimeout);
       justPressedRestartTimeout = setTimeout(() => {
-        justPressedRestart = false;
+        keyRepeat.justPressedRestart = false;
       }, 400);
     }
   }
