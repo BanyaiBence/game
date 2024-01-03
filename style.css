@@ -107,7 +107,7 @@ body::-webkit-scrollbar {
 .valid-cell{
     border: 0.3vw solid green;
 }
-.seed-container{
+.code-container{
     background-color: #c58e2ec1;
     border-radius: 1vw;
     padding: 0.5vw;
@@ -116,7 +116,7 @@ body::-webkit-scrollbar {
     justify-content: center;
     
 }
-.seed-form{
+.code-form{
     background-color: #c58e2ec1;
     border-radius: 1vw;
     padding: 0.5vw;
@@ -134,7 +134,7 @@ body::-webkit-scrollbar {
     justify-content: center;
     display: inline-block;
 }
-.seed-text{
+.code-text{
     color: black;
     font-weight: bold;
     font-size: 0.8rem;

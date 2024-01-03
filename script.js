@@ -553,10 +553,10 @@ const summerPointsE = document.getElementById("summer-points");
 const autumnPointsE = document.getElementById("autumn-points");
 const winterPointsE = document.getElementById("winter-points");
 const restartButton = document.getElementById("restart");
-const seedButton = document.getElementById("seed-button");
-const seedContainer = document.getElementById("seed");
-const seedInput = document.getElementById("seed-input");
-const seedLoadButton = document.getElementById("seed-load");
+const codeButton = document.getElementById("code-button");
+const codeContainer = document.getElementById("code");
+const codeInput = document.getElementById("code-input");
+const codeLoadButton = document.getElementById("code-load");
 
 // Global variables
 
@@ -585,7 +585,7 @@ let tileToWiggle = { x: 0, y: 0 };
 let tileToDodge = { x: 0, y: 0 };
 let tileToRotate = { x: 0, y: 0 };
 
-// Functions for initialisation
+// Functions for initialization
 quests = getMissions();
 init();
 
@@ -666,7 +666,7 @@ function init() {
   tableContent[8][9] = "mountain";
   tableContent[9][5] = "mountain";
 
-  contentFromSeed(generateSeed());
+  contentFromcode(generatecode());
 
   changeQuests();
 
@@ -683,11 +683,11 @@ function init() {
 
 // Event listeners
 
-seedLoadButton.addEventListener("click", () => {
+codeLoadButton.addEventListener("click", () => {
   localStorage.clear();
-  seed = seedInput.value;
-  seedContainer.innerHTML = seed;
-  contentFromSeed(seed);
+  code = codeInput.value;
+  codeContainer.innerHTML = code;
+  contentFromcode(code);
   draw();
 });
 
@@ -716,12 +716,12 @@ document.addEventListener("click", (event) => {
   draw();
 });
 
-seedButton.addEventListener("click", () => {
+codeButton.addEventListener("click", () => {
   localStorage.clear();
   resetData();
-  seed = generateSeed();
-  seedContainer.innerHTML = seed;
-  contentFromSeed(seed);
+  code = generatecode();
+  codeContainer.innerHTML = code;
+  contentFromcode(code);
 });
 
 // This will listen to the restart button, but will only restart the game if the button was pressed twice in a short time and holding the button down will not trigger the restart
@@ -1431,7 +1431,7 @@ function settleShape() {
   }
 }
 
-function objectToSeed(obj) {
+function objectTocode(obj) {
   len = obj.length;
   idxs = [];
   // Fill the array with numbers from 0 to n
@@ -1443,56 +1443,56 @@ function objectToSeed(obj) {
     const j = Math.floor(Math.random() * (i + 1));
     [idxs[i], idxs[j]] = [idxs[j], idxs[i]]; // Swap elements
   }
-  seed = idxs.join("-");
-  return seed;
+  code = idxs.join("-");
+  return code;
 }
 
-function generateShapeSeed() {
-  return objectToSeed(default_shapes);
+function generateShapecode() {
+  return objectTocode(default_shapes);
 }
-function generateQuestSeed() {
-  let basicQuestSeed = objectToSeed(missions.basic);
-  let extraQuestSeed = objectToSeed(missions.extra);
-  q1 = basicQuestSeed.split("-")[0];
-  q2 = basicQuestSeed.split("-")[1];
-  q3 = extraQuestSeed.split("-")[0];
-  q4 = extraQuestSeed.split("-")[1];
-  seed = q1 + "-" + q2 + "/" + q3 + "-" + q4;
+function generateQuestcode() {
+  let basicQuestcode = objectTocode(missions.basic);
+  let extraQuestcode = objectTocode(missions.extra);
+  q1 = basicQuestcode.split("-")[0];
+  q2 = basicQuestcode.split("-")[1];
+  q3 = extraQuestcode.split("-")[0];
+  q4 = extraQuestcode.split("-")[1];
+  code = q1 + "-" + q2 + "/" + q3 + "-" + q4;
 
-  return seed;
+  return code;
 }
 
-// Seed generation for multiplayer
-function generateSeed() {
-  let seed = "";
+// code generation for multiplayer
+function generatecode() {
+  let code = "";
   for (i = 0; i < 4; i++) {
-    seed += generateShapeSeed();
-    seed += "/";
+    code += generateShapecode();
+    code += "/";
   }
-  seed = seed.slice(0, -1);
-  seed += "x";
-  seed += generateQuestSeed();
+  code = code.slice(0, -1);
+  code += "x";
+  code += generateQuestcode();
 
-  return seed;
+  return code;
 }
-function contentFromSeed(seed) {
+function contentFromcode(code) {
   shapes = [];
   quests = [];
-  const shapeSeeds = seed.split("x")[0].split("/");
-  const questSeeds = seed.split("x")[1].split("/");
-  for (shapeSeed of shapeSeeds) {
-    shapeSeed = shapeSeed.split("-");
-    for (let i = 0; i < shapeSeed.length; i++) {
-      shapes.push(default_shapes[shapeSeed[i]]);
+  const shapecodes = code.split("x")[0].split("/");
+  const questcodes = code.split("x")[1].split("/");
+  for (shapecode of shapecodes) {
+    shapecode = shapecode.split("-");
+    for (let i = 0; i < shapecode.length; i++) {
+      shapes.push(default_shapes[shapecode[i]]);
     }
   }
 
-  basicQuestSeed = questSeeds[0].split("-");
-  extraQuestSeed = questSeeds[1].split("-");
-  const basicQuest1 = missions.basic[basicQuestSeed[0]];
-  const basicQuest2 = missions.basic[basicQuestSeed[1]];
-  const extraQuest1 = missions.extra[extraQuestSeed[0]];
-  const extraQuest2 = missions.extra[extraQuestSeed[1]];
+  basicQuestcode = questcodes[0].split("-");
+  extraQuestcode = questcodes[1].split("-");
+  const basicQuest1 = missions.basic[basicQuestcode[0]];
+  const basicQuest2 = missions.basic[basicQuestcode[1]];
+  const extraQuest1 = missions.extra[extraQuestcode[0]];
+  const extraQuest2 = missions.extra[extraQuestcode[1]];
 
   quests.push(basicQuest1);
   quests.push(basicQuest2);
