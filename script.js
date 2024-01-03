@@ -1026,9 +1026,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function drawQuestbar() {
     evalQuests();
     questBar.innerHTML = "";
-    const columns = Array.from({ length: 4 }, () =>
-      document.createElement("div")
-    );
+    const col1 = document.createElement("div");
+    const col2 = document.createElement("div");
+    col1.className = "quest-column";
+    col2.className = "quest-column";
 
     gameData.quests.forEach((quest, index) => {
       const questElement = document.createElement("div");
@@ -1057,15 +1058,16 @@ document.addEventListener("DOMContentLoaded", function () {
         questElement.appendChild(element)
       );
 
-      columns[index % 4].appendChild(questElement);
+      if (index < 2) {
+        col1.appendChild(questElement);
+      }
+      if (index >= 2) {
+        col2.appendChild(questElement);
+      }
     });
 
-    columns.forEach((col) => {
-      const row = document.createElement("div");
-      row.className = "quest-row";
-      row.appendChild(col);
-      questBar.appendChild(row);
-    });
+    questBar.appendChild(col1);
+    questBar.appendChild(col2);
   }
 
   function drawSideBar() {
