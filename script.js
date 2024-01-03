@@ -1,6 +1,4 @@
-// Constants
-// DO NOT MODIFY: These are the most important constants, changing them might break the game
-const TALBE_SIZE = 11;
+const TABLE_SIZE = 11;
 const SEASONS = ["spring", "summer", "autumn", "winter"];
 
 const missions = {
@@ -11,14 +9,14 @@ const missions = {
         "A térképed szélével szomszédos erdőmezőidért egy-egy pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
-          for (let j = 0; j < TALBE_SIZE; j++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "forest") {
               if (
                 i == 0 ||
-                i == TALBE_SIZE - 1 ||
+                i == TABLE_SIZE - 1 ||
                 j == 0 ||
-                j == TALBE_SIZE - 1
+                j == TABLE_SIZE - 1
               ) {
                 points++;
               }
@@ -36,9 +34,9 @@ const missions = {
         "Minden olyan sorért, amelyben három erdőmező van, négy-négy pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
           let forestCount = 0;
-          for (let j = 0; j < TALBE_SIZE; j++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "forest") {
               forestCount++;
             }
@@ -58,19 +56,19 @@ const missions = {
         "A farmmezőiddel szomszédos vízmezőidért két-két pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
-          for (let j = 0; j < TALBE_SIZE; j++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "farm") {
               if (i > 0 && tableContent[i - 1][j] == "water") {
                 points += 2;
               }
-              if (i < TALBE_SIZE - 1 && tableContent[i + 1][j] == "water") {
+              if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] == "water") {
                 points += 2;
               }
               if (j > 0 && tableContent[i][j - 1] == "water") {
                 points += 2;
               }
-              if (j < TALBE_SIZE - 1 && tableContent[i][j + 1] == "water") {
+              if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] == "water") {
                 points += 2;
               }
             }
@@ -86,10 +84,10 @@ const missions = {
       description: "Minden teli sorért vagy oszlopért 6-6 pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
           let rowFull = true;
           let colFull = true;
-          for (let j = 0; j < TALBE_SIZE; j++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == 0) {
               rowFull = false;
             }
@@ -118,9 +116,9 @@ const missions = {
       eval: function (tableContent) {
         let points = 0;
         let maxForestCount = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
           let forestCount = 0;
-          for (let j = 0; j < TALBE_SIZE; j++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[j][i] == "forest") {
               forestCount++;
             } else {
@@ -146,8 +144,8 @@ const missions = {
         "A legalább három különböző tereptípussal szomszédos falurégióidért három-három pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
-          for (let j = 0; j < TALBE_SIZE; j++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "town") {
               let types = {
                 town: false,
@@ -159,13 +157,13 @@ const missions = {
               if (i > 0 && tableContent[i - 1][j] != 0) {
                 types[tableContent[i - 1][j]] = true;
               }
-              if (i < TALBE_SIZE - 1 && tableContent[i + 1][j] != 0) {
+              if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] != 0) {
                 types[tableContent[i + 1][j]] = true;
               }
               if (j > 0 && tableContent[i][j - 1] != 0) {
                 types[tableContent[i][j - 1]] = true;
               }
-              if (j < TALBE_SIZE - 1 && tableContent[i][j + 1] != 0) {
+              if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] != 0) {
                 types[tableContent[i][j + 1]] = true;
               }
               let typeCount = 0;
@@ -191,10 +189,10 @@ const missions = {
         "Minden olyan oszlopodért, amelyben a farm illetve a vízmezők száma megegyezik, négy-négy pontot kapsz. Mindkét tereptípusból legalább egy-egy mezőnek lennie kell az oszlopban ahhoz, hogy pontot kaphass érte.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
           let farmCount = 0;
           let waterCount = 0;
-          for (let j = 0; j < TALBE_SIZE; j++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[j][i] == "farm") {
               farmCount++;
             }
@@ -217,19 +215,19 @@ const missions = {
         "A hegymezőiddel szomszédos vízmezőidért három-három pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
-          for (let j = 0; j < TALBE_SIZE; j++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "mountain") {
               if (i > 0 && tableContent[i - 1][j] == "water") {
                 points += 3;
               }
-              if (i < TALBE_SIZE - 1 && tableContent[i + 1][j] == "water") {
+              if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] == "water") {
                 points += 3;
               }
               if (j > 0 && tableContent[i][j - 1] == "water") {
                 points += 3;
               }
-              if (j < TALBE_SIZE - 1 && tableContent[i][j + 1] == "water") {
+              if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] == "water") {
                 points += 3;
               }
             }
@@ -246,19 +244,19 @@ const missions = {
         "A városmezőiddel szomszédos üres mezőkért 2-2 pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
-          for (let j = 0; j < TALBE_SIZE; j++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "town") {
               if (i > 0 && tableContent[i - 1][j] == 0) {
                 points += 2;
               }
-              if (i < TALBE_SIZE - 1 && tableContent[i + 1][j] == 0) {
+              if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] == 0) {
                 points += 2;
               }
               if (j > 0 && tableContent[i][j - 1] == 0) {
                 points += 2;
               }
-              if (j < TALBE_SIZE - 1 && tableContent[i][j + 1] == 0) {
+              if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] == 0) {
                 points += 2;
               }
             }
@@ -276,9 +274,9 @@ const missions = {
       eval: function (tableContent) {
         let points = 0;
         let maxTownCount = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
           let townCount = 0;
-          for (let j = 0; j < TALBE_SIZE; j++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "town") {
               townCount++;
             } else {
@@ -304,9 +302,9 @@ const missions = {
         "Minden páratlan sorszámú teli oszlopodért 10-10 pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i += 2) {
+        for (let i = 0; i < TABLE_SIZE; i += 2) {
           let full = true;
-          for (let j = 0; j < TALBE_SIZE; j++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[j][i] == 0) {
               full = false;
             }
@@ -326,9 +324,9 @@ const missions = {
         "Minden legalább öt különböző tereptípust tartalmazó sorért négy-négy pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
-        for (let i = 0; i < TALBE_SIZE; i++) {
+        for (let i = 0; i < TABLE_SIZE; i++) {
           let types = [];
-          for (let j = 0; j < TALBE_SIZE; j++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
             if (!types.includes(tableContent[i][j])) {
               types.push(tableContent[i][j]);
             }
@@ -345,7 +343,7 @@ const missions = {
   ],
 };
 
-const default_shapes = [
+const defaultShapes = [
   {
     time: 2,
     type: "water",
@@ -523,6 +521,7 @@ const default_shapes = [
     mirrored: false,
   },
 ];
+
 // Only here for convenience
 nullShape = {
   time: 0,
@@ -534,214 +533,235 @@ nullShape = {
   ],
 };
 
-// HTML elements: Must be in sync with the HTML file
-const table = document.getElementById("table");
-const tbody = table.querySelector("tbody");
-const mountainPath = "./assets/mountain.png";
-const forestPath = "./assets/forest.png";
-const waterPath = "./assets/water2.png";
-const farmPath = "./assets/farm.png";
-const townPath = "./assets/town.png";
-const sideBar = document.getElementById("side-bar");
-const timer = document.getElementById("timer");
-const rotateButton = document.getElementById("rotate");
-const mirrorButton = document.getElementById("mirror");
-const time = document.getElementById("time");
-const questBar = document.getElementById("quest-bar");
-const springPointsE = document.getElementById("spring-points");
-const summerPointsE = document.getElementById("summer-points");
-const autumnPointsE = document.getElementById("autumn-points");
-const winterPointsE = document.getElementById("winter-points");
-const restartButton = document.getElementById("restart");
-const codeButton = document.getElementById("code-button");
-const codeContainer = document.getElementById("code");
-const codeInput = document.getElementById("code-input");
-const codeLoadButton = document.getElementById("code-load");
+// Use destructuring to access elements directly
+document.addEventListener("DOMContentLoaded", function () {
+  const {
+    table,
+    sideBar,
+    timer,
+    rotateButton,
+    mirrorButton,
+    time,
+    questBar,
+    springPointsE,
+    summerPointsE,
+    autumnPointsE,
+    winterPointsE,
+    restartButton,
+    codeButton,
+    codeContainer,
+    codeInput,
+    codeLoadButton,
+    tbody,
+  } = {
+    table: document.getElementById("table"),
+    sideBar: document.getElementById("side-bar"),
+    timer: document.getElementById("timer"),
+    rotateButton: document.getElementById("rotate"),
+    mirrorButton: document.getElementById("mirror"),
+    time: document.getElementById("time"),
+    questBar: document.getElementById("quest-bar"),
+    springPointsE: document.getElementById("spring-points"),
+    summerPointsE: document.getElementById("summer-points"),
+    autumnPointsE: document.getElementById("autumn-points"),
+    winterPointsE: document.getElementById("winter-points"),
+    restartButton: document.getElementById("restart"),
+    codeButton: document.getElementById("code-button"),
+    codeContainer: document.getElementById("code"),
+    codeInput: document.getElementById("code-input"),
+    codeLoadButton: document.getElementById("code-load"),
+    tbody: document.getElementById("main-table"),
+  };
 
-// Global variables
+  // Image paths
+  const mountainPath = "./assets/mountain.png";
+  const forestPath = "./assets/forest.png";
+  const waterPath = "./assets/water2.png";
+  const farmPath = "./assets/farm.png";
+  const townPath = "./assets/town.png";
 
-let keyRepeatCounter = 0;
-let longKeyRepeateTimeout = null;
-let shortKeyRepeateTimeout = null;
-let justPressedRestart = false;
-let justPressedRestartTimeout = null;
-let shapes = []; // This is the list of shapes that are still available
-let targetCenter = { x: 5, y: 5 };
-let mousePos = { x: 0, y: 0 };
-let timeLeft = 28; // This will determine the current season
-let currentSeason = 0; // 0: spring, 1: summer, 2: autumn, 3: winter
-let quests = {};
-let currentShape = nullShape; // This is the shape that is currently being placed
-let tableContent = []; // This is the content of the table
+  const imagePathMap = {
+    mountain: mountainPath,
+    forest: forestPath,
+    water: waterPath,
+    farm: farmPath,
+    town: townPath,
+  };
+  const seasonNames = ["spring", "summer", "autumn", "winter"];
 
-let globalPoints = 0;
-let springPoints = 0;
-let summerPoints = 0;
-let autumnPoints = 0;
-let winterPoints = 0;
+  // Global variables
+  let keyRepeat = {
+    counter: 0,
+    longTimeout: null,
+    shortTimeout: null,
+    justPressedRestart: false,
+    justPressedRestartTimeout: null,
+  };
 
-// Selected tiles for random animations, only used for visual effects
-let tileToWiggle = { x: 0, y: 0 };
-let tileToDodge = { x: 0, y: 0 };
-let tileToRotate = { x: 0, y: 0 };
+  let gameData = {
+    shapes: [],
+    targetCenter: { x: 5, y: 5 },
+    mousePos: { x: 0, y: 0 },
+    timeLeft: 28,
+    currentSeason: 0, // 0: spring, 1: summer, 2: autumn, 3: winter
+    quests: {},
+    currentShape: nullShape,
+    tableContent: [],
+  };
 
-// Functions for initialization
-quests = getMissions();
-init();
+  let points = {
+    global: 0,
+    spring: 0,
+    summer: 0,
+    autumn: 0,
+    winter: 0,
+  };
 
-// This function is called when the game is over to reset the game
-function resetData() {
-  shapes = [];
-  targetCenter = { x: 5, y: 5 };
-  mousePos = { x: 0, y: 0 };
-  timeLeft = 28;
-  currentSeason = 0;
+  let tileToWiggle = { x: 0, y: 0 };
+  let tileToDodge = { x: 0, y: 0 };
+  let tileToRotate = { x: 0, y: 0 };
 
-  quests = {};
-  currentShape = nullShape;
-  tableContent = [];
-  globalPoints = 0;
-  springPoints = 0;
-  summerPoints = 0;
-  autumnPoints = 0;
-  winterPoints = 0;
-  tileToWiggle = { x: 0, y: 0 };
-  tileToDodge = { x: 0, y: 0 };
-  tileToRotate = { x: 0, y: 0 };
-  currentSeason = 0;
+  function cleanData() {
+    keyRepeat = {
+      counter: 0,
+      longTimeout: null,
+      shortTimeout: null,
+      justPressedRestart: false,
+      justPressedRestartTimeout: null,
+    };
 
-  init();
+    gameData = {
+      shapes: [],
+      targetCenter: { x: 5, y: 5 },
+      mousePos: { x: 0, y: 0 },
+      timeLeft: 28,
+      currentSeason: 0, // 0: spring, 1: summer, 2: autumn, 3: winter
+      quests: {},
+      currentShape: nullShape,
+      tableContent: [],
+    };
 
-  currentShape = shapes[0];
-  changeQuests();
-}
-
-// This function mixes the shapes in a random order
-function mixShapes() {
-  shapes = JSON.parse(JSON.stringify(default_shapes));
-  const mixedShapes = [];
-  while (shapes.length > 0) {
-    const rndIdx = getRandomIdx(shapes.length, []);
-    mixedShapes.push(shapes[rndIdx]);
-    shapes.splice(rndIdx, 1);
+    points = {
+      global: 0,
+      spring: 0,
+      summer: 0,
+      autumn: 0,
+      winter: 0,
+    };
   }
-  shapes = mixedShapes;
-}
-// This function chooses the missions for the game
-function getMissions() {
-  const missionList = [];
-  const basicMissionList = missions.basic;
-  const extraMissionList = missions.extra;
 
-  const rndIdxListBasic = [];
-  const rndIdxListExtra = [];
-  for (let i = 0; i < 2; i++) {
-    rndIdxListBasic.push(
-      getRandomIdx(Object.keys(basicMissionList).length, rndIdxListBasic)
-    );
-    missionList.push(basicMissionList[rndIdxListBasic[i]]);
-  }
-  for (let i = 0; i < 2; i++) {
-    rndIdxListExtra.push(
-      getRandomIdx(Object.keys(extraMissionList).length, rndIdxListExtra)
-    );
-    missionList.push(extraMissionList[rndIdxListExtra[i]]);
-  }
-  return missionList;
-}
-
-// Initialisation of the table
-function init() {
-  // Initilaise table content
-  for (let i = 0; i < TALBE_SIZE; i++) {
-    tableContent.push([]);
-    for (let j = 0; j < TALBE_SIZE; j++) {
-      tableContent[i].push(0);
+  function initializeTableContent() {
+    for (let i = 0; i < TABLE_SIZE; i++) {
+      gameData.tableContent.push(Array(TABLE_SIZE).fill(0));
     }
   }
-  // Add the mountains
-  tableContent[1][1] = "mountain";
-  tableContent[3][8] = "mountain";
-  tableContent[5][3] = "mountain";
-  tableContent[8][9] = "mountain";
-  tableContent[9][5] = "mountain";
 
-  contentFromcode(generatecode());
+  function addMountains() {
+    const mountainPositions = [
+      [1, 1],
+      [3, 8],
+      [5, 3],
+      [8, 9],
+      [9, 5],
+    ];
 
-  changeQuests();
+    mountainPositions.forEach(([x, y]) => {
+      if (x < TABLE_SIZE && y < TABLE_SIZE) {
+        gameData.tableContent[x][y] = "mountain";
+      }
+    });
+  }
 
-  if (checkLocalStorageForGame()) {
-    try {
-      loadGame();
-    } catch {
-      localStorage.clear();
+  function init() {
+    initializeTableContent();
+    addMountains();
+    contentFromCode(generateCode());
+
+    if (localStorage.getItem("tableContent") !== null) {
+      try {
+        loadGame();
+      } catch (error) {
+        localStorage.clear();
+      }
     }
+    activateQuests();
+    initDraw();
+    draw();
   }
-  initDraw();
-  draw();
-}
 
-// Event listeners
+  // Click event listeners
+  codeLoadButton.addEventListener("click", handleCodeLoad);
+  restartButton.addEventListener("click", restart);
+  rotateButton.addEventListener("click", rotateAndDraw);
+  mirrorButton.addEventListener("click", mirrorAndDraw);
+  codeButton.addEventListener("click", handleCodeButtonClick);
 
-codeLoadButton.addEventListener("click", () => {
-  localStorage.clear();
-  code = codeInput.value;
-  codeContainer.innerHTML = code;
-  contentFromcode(code);
-  draw();
-});
+  // Mousemove event listener
+  document.addEventListener("mousemove", handleMouseMove);
 
-restartButton.addEventListener("click", () => {
-  restart();
-});
+  // Click event listener
+  document.addEventListener("click", handleMouseClick);
 
-rotateButton.addEventListener("click", () => {
-  rotateCurrentShape();
-  draw();
-});
+  // Keydown event listeners
+  document.addEventListener("keydown", handleRestartShortcut);
+  document.addEventListener("keydown", handleRotateMirrorShortcut);
+  document.addEventListener("keypress", handleKeyPress);
 
-mirrorButton.addEventListener("click", () => {
-  mirrorCurrentShape();
-  draw();
-});
-
-document.addEventListener("mousemove", (event) => {
-  mousePos = { x: event.clientX, y: event.clientY };
-});
-
-document.addEventListener("click", (event) => {
-  if (canSettle() && mouseIsOverTable()) {
-    settleShape();
+  // Functions to handle events
+  function handleCodeLoad() {
+    localStorage.clear();
+    const code = codeInput.value;
+    codeContainer.innerHTML = code;
+    contentFromCode(code);
+    draw();
   }
-  draw();
-});
 
-codeButton.addEventListener("click", () => {
-  localStorage.clear();
-  resetData();
-  code = generatecode();
-  codeContainer.innerHTML = code;
-  contentFromcode(code);
-});
+  function rotateAndDraw() {
+    rotateCurrentShape();
+    draw();
+  }
 
-// This will listen to the restart button, but will only restart the game if the button was pressed twice in a short time and holding the button down will not trigger the restart
-document.addEventListener("keydown", (event) => {
-  if (event.repeat) {
-    keyRepeatCounter++;
-    clearTimeout(longKeyRepeateTimeout);
-    longKeyRepeateTimeout = setTimeout(() => {
-      keyRepeatCounter = 0;
-    }, 400);
+  function mirrorAndDraw() {
+    mirrorCurrentShape();
+    draw();
   }
-  if (keyRepeatCounter >= 2) {
-    clearTimeout(shortKeyRepeateTimeout);
-    shortKeyRepeateTimeout = setTimeout(() => {
-      keyRepeatCounter = 0;
-    }, 50);
-    return;
+
+  function handleCodeButtonClick() {
+    localStorage.clear();
+    cleanData();
+    init();
+    const code = generateCode();
+    codeContainer.innerHTML = code;
+    contentFromCode(code);
   }
-  switch (event.key) {
-    case "r":
+
+  function handleMouseMove(event) {
+    gameData.mousePos = { x: event.clientX, y: event.clientY };
+  }
+
+  function handleMouseClick(event) {
+    if (canSettle() && mouseIsOverTable()) {
+      settleShape();
+    }
+    draw();
+  }
+
+  function handleRestartShortcut(event) {
+    if (event.repeat) {
+      keyRepeat.counter++;
+      clearTimeout(keyRepeat.longTimeout);
+      keyRepeat.longTimeout = setTimeout(() => {
+        keyRepeat.counter = 0;
+      }, 400);
+    }
+    if (keyRepeat.counter >= 2) {
+      clearTimeout(keyRepeat.shortTimeout);
+      keyRepeat.shortTimeout = setTimeout(() => {
+        keyRepeat.counter = 0;
+      }, 50);
+      return;
+    }
+    if (event.key === "r") {
       if (justPressedRestart) {
         restart();
       }
@@ -750,796 +770,766 @@ document.addEventListener("keydown", (event) => {
       justPressedRestartTimeout = setTimeout(() => {
         justPressedRestart = false;
       }, 400);
-      break;
+    }
   }
-});
 
-// This will listen to the rotate and mirror buttons, but holding the button down will not trigger the action more than 3 times at once
-document.addEventListener("keydown", (event) => {
-  if (event.repeat) {
-    keyRepeatCounter++;
-    clearTimeout(longKeyRepeateTimeout);
-    longKeyRepeateTimeout = setTimeout(() => {
-      keyRepeatCounter = 0;
-    }, 400);
+  function handleRotateMirrorShortcut(event) {
+    if (event.repeat) {
+      keyRepeat.counter++;
+      clearTimeout(keyRepeat.longTimeout);
+      keyRepeat.longTimeout = setTimeout(() => {
+        keyRepeat.counter = 0;
+      }, 400);
+    }
+    if (keyRepeat.counter >= 4) {
+      clearTimeout(keyRepeat.shortTimeout);
+      keyRepeat.shortTimeout = setTimeout(() => {
+        keyRepeat.counter = 0;
+      }, 50);
+      return;
+    }
+    switch (event.key) {
+      case "t":
+        mirrorCurrentShape();
+        break;
+      case "f":
+        rotateCurrentShape();
+        break;
+    }
   }
-  if (keyRepeatCounter >= 4) {
-    clearTimeout(shortKeyRepeateTimeout);
-    shortKeyRepeateTimeout = setTimeout(() => {
-      keyRepeatCounter = 0;
-    }, 50);
-    return;
-  }
-  switch (event.key) {
-    case "t":
-      mirrorCurrentShape();
-      break;
-    case "f":
-      rotateCurrentShape();
-      break;
-  }
-});
 
-document.addEventListener("keypress", (event) => {
-  switch (event.key) {
-    case "w":
-      targetCenter.y--;
-      break;
-    case "s":
-      targetCenter.y++;
-      break;
-    case "a":
-      targetCenter.x--;
-      break;
-    case "d":
-      targetCenter.x++;
-      break;
-    case " ":
-      if (canSettle()) {
-        settleShape();
-      }
-      break;
+  function handleKeyPress(event) {
+    switch (event.key) {
+      case "w":
+        gameData.targetCenter.y--;
+        break;
+      case "s":
+        targetCenter.y++;
+        break;
+      case "a":
+        gameData.targetCenter.x--;
+        break;
+      case "d":
+        targetCenter.x++;
+        break;
+      case " ":
+        if (canSettle()) {
+          settleShape();
+        }
+        break;
+    }
+    alignShapeIfOutOfBounds();
+    draw();
   }
-  alignShapeIfOutOfBounds();
-  draw();
-});
 
-// Helper functions
+  function surroundedMountains() {
+    let result = 0;
 
-function surroundedMountains() {
-  result = 0;
-  for (let i = 0; i < TALBE_SIZE; i++) {
-    for (let j = 0; j < TALBE_SIZE; j++) {
-      if (tableContent[i][j] == "mountain") {
-        isSurrounded = true;
-        if (i > 0 && tableContent[i - 1][j] == 0) {
-          isSurrounded = false;
-        }
-        if (i < TALBE_SIZE - 1 && tableContent[i + 1][j] == 0) {
-          isSurrounded = false;
-        }
-        if (j > 0 && tableContent[i][j - 1] == 0) {
-          isSurrounded = false;
-        }
-        if (j < TALBE_SIZE - 1 && tableContent[i][j + 1] == 0) {
-          isSurrounded = false;
-        }
-        if (isSurrounded) {
-          result++;
+    const isMountain = (i, j) =>
+      gameData.currentShape[i] && gameData.currentShape[i][j] === "mountain";
+
+    for (let i = 0; i < TABLE_SIZE; i++) {
+      for (let j = 0; j < TABLE_SIZE; j++) {
+        if (isMountain(i, j)) {
+          const isSurrounded =
+            (!isMountain(i - 1, j) || i === 0) &&
+            (!isMountain(i + 1, j) || i === TABLE_SIZE - 1) &&
+            (!isMountain(i, j - 1) || j === 0) &&
+            (!isMountain(i, j + 1) || j === TABLE_SIZE - 1);
+
+          if (isSurrounded) {
+            result++;
+          }
         }
       }
     }
+    return result;
   }
-  return result;
-}
-
-function changeQuests() {
-  deactiveQuests();
-  activateQuests();
-}
-
-// Makes the quests for the current season active
-function activateQuests() {
-  switch (currentSeason) {
-    case 0:
-      quests[0].active = true;
-      quests[1].active = true;
-      break;
-    case 1:
-      quests[1].active = true;
-      quests[2].active = true;
-      break;
-    case 2:
-      quests[2].active = true;
-      quests[3].active = true;
-      break;
-    case 3:
-      quests[3].active = true;
-      quests[0].active = true;
-      break;
-  }
-}
-
-// Helps the click event listener to determine if the mouse is over the table
-function mouseIsOverTable() {
-  const tablePos = table.getBoundingClientRect();
-
-  if (
-    mousePos.x > tablePos.left &&
-    mousePos.x < tablePos.right &&
-    mousePos.y > tablePos.top &&
-    mousePos.y < tablePos.bottom
-  ) {
-    return true;
-  }
-  return false;
-}
-// Returns a random index, reduces redundancy
-function getRandomIdx(length, exclude) {
-  let rndIdx = Math.floor(Math.random() * length);
-  i = 0;
-  while (exclude.includes(rndIdx)) {
-    rndIdx = Math.floor(Math.random() * length);
-    i++;
-    if (i > 100) {
-      return getRandomIdx(length, []);
+  function deactivateQuests() {
+    for (quest of gameData.quests) {
+      quest.active = false;
     }
   }
-  return rndIdx;
-}
 
-// Helps with finding the image path for a given type
-function getImagePath(type) {
-  switch (type) {
-    case "mountain":
-      return mountainPath;
-    case "forest":
-      return forestPath;
-    case "water":
-      return waterPath;
-    case "farm":
-      return farmPath;
-    case "town":
-      return townPath;
-  }
-  return "";
-}
-
-function getSeasonName() {
-  switch (currentSeason) {
-    case 0:
-      return "spring";
-    case 1:
-      return "summer";
-    case 2:
-      return "autumn";
-    case 3:
-      return "winter";
-  }
-}
-
-function minXOfShape() {
-  let minX = 2;
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (currentShape.shape[i][j] == 1 && j < minX) {
-        minX = j;
-      }
-    }
-  }
-  return minX + targetCenter.x - 1;
-}
-
-function minYOfShape() {
-  let minY = 2;
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (currentShape.shape[i][j] == 1 && i < minY) {
-        minY = i;
-      }
-    }
-  }
-  return minY + targetCenter.y - 1;
-}
-
-function maxXOfShape() {
-  let maxX = 0;
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (currentShape.shape[i][j] == 1 && j > maxX) {
-        maxX = j;
-      }
-    }
-  }
-  return maxX + targetCenter.x - 1;
-}
-
-function maxYOfShape() {
-  let maxY = 0;
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (currentShape.shape[i][j] == 1 && i > maxY) {
-        maxY = i;
-      }
-    }
-  }
-  return maxY + targetCenter.y - 1;
-}
-
-// Returns true if the given coordinates are in in overlap with the current shape
-function inTargetArea(x, y) {
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (
-        currentShape.shape[i][j] == 1 &&
-        targetCenter.x - 1 + j == x &&
-        targetCenter.y - 1 + i == y
-      ) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-// Returns true if the given coordinates are in the 3x3 target area
-function isTarget(x, y) {
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (targetCenter.x - 1 + j == x && targetCenter.y - 1 + i == y) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-// Return true if the given coordinates are in overlap with the current shape and the table is not empty at that position
-function checkOverlap(x, y) {
-  if (inTargetArea(x, y) && tableContent[y][x] != 0) {
-    return true;
-  }
-  return false;
-}
-
-// If the targeted are is empty, the shape can be settled
-function canSettle() {
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (checkOverlap(targetCenter.x - 1 + j, targetCenter.y - 1 + i)) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-// Handlers
-
-// This function is called when the mouse is over a cell
-function mouseOverHandler(event) {
-  const targetPos = event.target.id.split(" ");
-  targetCenter.x = parseInt(targetPos[1]);
-  targetCenter.y = parseInt(targetPos[0]);
-  if (currentShape.shape[1][1] == 0) {
-    if (currentShape.shape[0][1] == 1) {
-      targetCenter.y++;
-    } else if (currentShape.shape[1][0] == 1) {
-      targetCenter.x++;
-    } else if (currentShape.shape[1][2] == 1) {
-      targetCenter.x--;
-    } else if (currentShape.shape[2][1] == 1) {
-      targetCenter.y--;
-    }
-  }
-  alignShapeIfOutOfBounds();
-  drawTable();
-  drawSideBar();
-}
-
-// Drawing functions
-
-function initDraw() {
-  initDrawTable();
-  drawSideBar();
-  drawTimer();
-  drawQuestbar();
-}
-
-function drawQuestbar() {
-  evalQuests();
-  questBar.innerHTML = "";
-  const row1 = document.createElement("div");
-  row1.className = "quest-row";
-  const row2 = document.createElement("div");
-  row2.className = "quest-row";
-  const col1 = document.createElement("div");
-  col1.className = "quest-column";
-  const col2 = document.createElement("div");
-  col2.className = "quest-column";
-  const col3 = document.createElement("div");
-  col3.className = "quest-column";
-  const col4 = document.createElement("div");
-  col4.className = "quest-column";
-  for (let i = 0; i < quests.length; i++) {
-    const quest = document.createElement("div");
-    quest.className = "quest";
-    if (quests[i].active) {
-      quest.classList.add(getSeasonName() + "-quest");
-    } else {
-      quest.classList.add("inactive-quest");
-    }
-    const title = document.createElement("p");
-    title.classList.add("quest-title");
-    title.innerHTML = quests[i].title;
-    title.className = "quest-title";
-    const description = document.createElement("p");
-    description.classList.add("quest-description");
-    description.innerHTML = quests[i].description;
-    description.className = "quest-description";
-    const points = document.createElement("p");
-    if (quests[i].active) {
-      points.innerHTML = "Pontok:" + quests[i].points;
-    }
-    points.className = "quest-point-text";
-    quest.appendChild(title);
-    quest.appendChild(description);
-    quest.appendChild(points);
-    switch (i % 4) {
+  function activateQuests() {
+    switch (gameData.currentSeason) {
       case 0:
-        col1.appendChild(quest);
+        gameData.quests[0].active = true;
+        gameData.quests[1].active = true;
         break;
       case 1:
-        col2.appendChild(quest);
+        gameData.quests[1].active = true;
+        gameData.quests[2].active = true;
         break;
       case 2:
-        col3.appendChild(quest);
+        gameData.quests[2].active = true;
+        gameData.quests[3].active = true;
         break;
       case 3:
-        col4.appendChild(quest);
+        gameData.quests[3].active = true;
+        gameData.quests[0].active = true;
         break;
     }
   }
-  row1.appendChild(col1);
-  row1.appendChild(col2);
-  row2.appendChild(col3);
-  row2.appendChild(col4);
-  questBar.appendChild(row1);
-  questBar.appendChild(row2);
-}
-function drawTimer() {
-  time.innerHTML = timeLeft;
-  if (timeLeft <= 0) {
-    time.innerHTML = "0";
-  }
-  timer.className = "timer " + SEASONS[currentSeason];
-}
 
-function drawSideBar() {
-  sideBar.innerHTML = "";
-  const shape = document.createElement("table");
+  // Helps the click event listener to determine if the mouse is over the table
+  function mouseIsOverTable() {
+    const tablePos = table.getBoundingClientRect();
 
-  const hour = document.createElement("p");
-  hour.innerHTML = "Idő: " + currentShape.time;
-  hour.className = "sidebar-text";
-
-  for (let i = 0; i < currentShape.shape.length; i++) {
-    const tr = document.createElement("tr");
-    for (let j = 0; j < currentShape.shape[0].length; j++) {
-      const td = document.createElement("td");
-      if (currentShape.shape[i][j] == 1) {
-        td.style.backgroundImage = `url(${getImagePath(currentShape.type)})`;
-      }
-      td.className = "cell";
-      td.id = `${i} ${j}`;
-      tr.appendChild(td);
+    if (
+      gameData.mousePos.x > tablePos.left &&
+      gameData.mousePos.x < tablePos.right &&
+      gameData.mousePos.y > tablePos.top &&
+      gameData.mousePos.y < tablePos.bottom
+    ) {
+      return true;
     }
-    tr.className = "row";
-    shape.appendChild(tr);
+    return false;
   }
-  sideBar.appendChild(shape);
-  sideBar.appendChild(hour);
-}
 
-function drawTable() {
-  for (let row in tableContent) {
-    for (let col in tableContent[row]) {
-      cell = tbody.rows[row].cells[col];
+  function getRandomIdx(length, exclude) {
+    const excludedSet = new Set(exclude);
+    let i = 0;
 
-      cell.style.backgroundImage = `url(${getImagePath(
-        tableContent[row][col]
-      )})`;
-      cell.className = "cell";
-      if (tableContent[row][col] == "mountain") {
-        cell.classList.add("mountain");
+    while (i < 100) {
+      const rndIdx = Math.floor(Math.random() * length);
+      if (!excludedSet.has(rndIdx)) {
+        return rndIdx;
       }
-      if (tileToWiggle.x == col && tileToWiggle.y == row) {
-        cell.classList.add("wiggle");
-      }
-      if (tileToDodge.x == col && tileToDodge.y == row) {
-        cell.classList.add("dodge");
-      }
-      if (tileToRotate.x == col && tileToRotate.y == row) {
-        cell.classList.add("rotate");
-      }
-      if (isTarget(col, row)) {
-        cell.classList.add("target-grid-cell");
-      }
+      i++;
+    }
 
-      if (inTargetArea(col, row)) {
-        cell.className = "cell target-cell";
-        cell.style.backgroundImage = `url(${getImagePath(currentShape.type)})`;
-        if (checkOverlap(col, row)) {
-          cell.classList.add("invalid-cell");
-        } else {
-          cell.classList.add("valid-cell");
+    return getRandomIdx(length, []);
+  }
+
+  function getImagePath(type) {
+    return imagePathMap[type] || "";
+  }
+
+  function minXOfShape() {
+    let minX = 1000;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (gameData.currentShape.shape[i][j] === 1) {
+          minX = Math.min(minX, j);
         }
       }
     }
+    return minX + gameData.targetCenter.x - 1;
   }
-}
-function drawSeasonBar() {
-  springPointsE.innerHTML = springPoints;
-  summerPointsE.innerHTML = summerPoints;
-  autumnPointsE.innerHTML = autumnPoints;
-  winterPointsE.innerHTML = winterPoints;
-}
 
-function initDrawTable() {
-  tbody.innerHTML = "";
-  for (let row in tableContent) {
-    let tr = document.createElement("tr");
-    for (let col in tableContent[row]) {
-      let cell = document.createElement("td");
-      cell.addEventListener("mouseover", mouseOverHandler);
-      cell.className = "cell";
-      cell.id = `${row} ${col}`; // add id to cell
-      cell.style.backgroundImage = `url(${getImagePath(
-        tableContent[row][col]
-      )})`;
-      if (tileToWiggle.x == col && tileToWiggle.y == row) {
-        cell.className = "cell wiggle";
-      }
-
-      if (inTargetArea(col, row)) {
-        cell.className = "cell target-cell";
-        if (checkOverlap(col, row)) {
-          cell.className = "cell target-cell invalid-cell";
-        } else {
-          cell.style.backgroundImage = `url(${getImagePath(
-            currentShape.type
-          )})`;
+  function minYOfShape() {
+    let minY = 1000; // A very large initial value to ensure any actual value is smaller
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (gameData.currentShape.shape[i][j] === 1) {
+          minY = Math.min(minY, i);
         }
       }
-
-      tr.appendChild(cell);
     }
-    tbody.appendChild(tr);
+    return minY + gameData.targetCenter.y - 1;
   }
-}
 
-function draw() {
-  drawSeasonBar();
-  drawTable();
-  drawSideBar();
-  drawTimer();
-  drawQuestbar();
-}
-
-// Game logic functions
-function saveGame() {
-  localStorage.setItem("tableContent", JSON.stringify(tableContent));
-  localStorage.setItem("shapes", JSON.stringify(shapes));
-  localStorage.setItem("targetCenter", JSON.stringify(targetCenter));
-  localStorage.setItem("timeLeft", JSON.stringify(timeLeft));
-  localStorage.setItem("currentSeason", JSON.stringify(currentSeason));
-  localStorage.setItem("currentShape", JSON.stringify(currentShape));
-  localStorage.setItem("globalPoints", JSON.stringify(globalPoints));
-  localStorage.setItem("springPoints", JSON.stringify(springPoints));
-  localStorage.setItem("summerPoints", JSON.stringify(summerPoints));
-  localStorage.setItem("autumnPoints", JSON.stringify(autumnPoints));
-  localStorage.setItem("winterPoints", JSON.stringify(winterPoints));
-
-  const questsToSave = [];
-  for (let i = 0; i < quests.length; i++) {
-    data = { title: quests[i].title, points: quests[i].points };
-    questsToSave.push(data);
-  }
-  localStorage.setItem("quests", JSON.stringify(questsToSave));
-}
-function loadGame() {
-  tableContent = JSON.parse(localStorage.getItem("tableContent"));
-  shapes = JSON.parse(localStorage.getItem("shapes"));
-  targetCenter = JSON.parse(localStorage.getItem("targetCenter"));
-  timeLeft = JSON.parse(localStorage.getItem("timeLeft"));
-  currentSeason = JSON.parse(localStorage.getItem("currentSeason"));
-
-  currentShape = JSON.parse(localStorage.getItem("currentShape"));
-  globalPoints = JSON.parse(localStorage.getItem("globalPoints"));
-  springPoints = JSON.parse(localStorage.getItem("springPoints"));
-  summerPoints = JSON.parse(localStorage.getItem("summerPoints"));
-  autumnPoints = JSON.parse(localStorage.getItem("autumnPoints"));
-  winterPoints = JSON.parse(localStorage.getItem("winterPoints"));
-
-  loadedQuests = JSON.parse(localStorage.getItem("quests"));
-  quests = [];
-
-  for (let i = 0; i < loadedQuests.length; i++) {
-    for (quest of missions.basic) {
-      if (quest.title == loadedQuests[i].title) {
-        quest.points = loadedQuests[i].points;
-        quests.push(quest);
+  function maxXOfShape() {
+    let maxX = -1;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (gameData.currentShape.shape[i][j] === 1) {
+          maxX = Math.max(maxX, j);
+        }
       }
     }
-    for (quest of missions.extra) {
-      if (quest.title == loadedQuests[i].title) {
-        quest.points = loadedQuests[i].points;
-        quests.push(quest);
+    return maxX + gameData.targetCenter.x - 1;
+  }
+
+  function maxYOfShape() {
+    let maxY = -1;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (gameData.currentShape.shape[i][j] === 1) {
+          maxY = Math.max(maxY, i);
+        }
       }
     }
+    return maxY + gameData.targetCenter.y - 1;
   }
-  changeQuests();
-}
-function checkLocalStorageForGame() {
-  if (localStorage.getItem("tableContent") != null) {
+
+  function inTargetArea(x, y) {
+    const relX = x - gameData.targetCenter.x + 1;
+    const relY = y - gameData.targetCenter.y + 1;
+    return (
+      relX >= 0 &&
+      relX < 3 &&
+      relY >= 0 &&
+      relY < 3 &&
+      gameData.currentShape.shape[relY][relX] === 1
+    );
+  }
+
+  function isTarget(x, y) {
+    const relX = x - gameData.targetCenter.x + 1;
+    const relY = y - gameData.targetCenter.y + 1;
+    return relX >= 0 && relX < 3 && relY >= 0 && relY < 3;
+  }
+
+  function checkOverlap(x, y) {
+    return inTargetArea(x, y) && gameData.tableContent[y][x] !== 0;
+  }
+
+  function canSettle() {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (
+          checkOverlap(
+            gameData.targetCenter.x - 1 + j,
+            gameData.targetCenter.y - 1 + i
+          )
+        ) {
+          return false;
+        }
+      }
+    }
     return true;
   }
-  return false;
-}
-function restart() {
-  localStorage.clear();
-  resetData();
-  draw();
-}
 
-function gameOver() {
-  currentShape = nullShape;
-  localStorage.clear();
-  draw();
-  let points = 0;
-  points += springPoints;
-  points += summerPoints;
-  points += autumnPoints;
-  points += winterPoints;
-  points += surroundedMountains();
-  setTimeout(() => {
-    alert(
-      "Játék vége! \nPontszámod: " +
-        points +
-        " pont\nTavasz: " +
-        springPoints +
-        " pont\nNyár: " +
-        summerPoints +
-        " pont\nŐsz: " +
-        autumnPoints +
-        " pont\nTél: " +
-        winterPoints +
-        " pont\nKörbevett hegyek: " +
-        surroundedMountains() +
-        " pont"
+  // Handlers
+
+  // This function is called when the mouse is over a cell
+  function mouseOverHandler(event) {
+    const targetPos = event.target.id.split(" ");
+    gameData.targetCenter.x = parseInt(targetPos[1]);
+    gameData.targetCenter.y = parseInt(targetPos[0]);
+    if (gameData.currentShape.shape[1][1] == 0) {
+      if (gameData.currentShape.shape[0][1] == 1) {
+        gameData.targetCenter.y++;
+      } else if (gameData.currentShape.shape[1][0] == 1) {
+        gameData.targetCenter.x++;
+      } else if (gameData.currentShape.shape[1][2] == 1) {
+        gameData.targetCenter.x--;
+      } else if (gameData.currentShape.shape[2][1] == 1) {
+        gameData.targetCenter.y--;
+      }
+    }
+    alignShapeIfOutOfBounds();
+    drawTable();
+    drawSideBar();
+  }
+
+  // Drawing functions
+
+  function initDraw() {
+    initDrawTable();
+    drawSideBar();
+    drawQuestbar();
+  }
+
+  function drawQuestbar() {
+    evalQuests();
+    questBar.innerHTML = "";
+    const columns = Array.from({ length: 4 }, () =>
+      document.createElement("div")
     );
-    restart();
-  }, 100);
-}
 
-function evalQuests() {
-  globalPoints = 0;
-  for (let i = 0; i < quests.length; i++) {
-    quests[i].points = 0;
-    if (quests[i].active) {
-      quests[i].points = quests[i].eval(tableContent);
-      globalPoints += quests[i].points;
-    }
-  }
-}
+    gameData.quests.forEach((quest, index) => {
+      const questElement = document.createElement("div");
+      questElement.className = "quest";
+      questElement.classList.add(
+        quest.active
+          ? seasonNames[gameData.currentSeason] + "-quest"
+          : "inactive-quest"
+      );
 
-function rotateCurrentShape() {
-  currentShape.rotation = (currentShape.rotation + 1) % 4;
-  const tmp = JSON.parse(JSON.stringify(currentShape));
-  for (let i = 0; i < tmp.shape.length; i++) {
-    for (let j = 0; j < tmp.shape.length; j++) {
-      tmp.shape[j][tmp.shape[0].length - i - 1] = currentShape.shape[i][j];
-    }
-  }
-  currentShape = tmp;
-}
+      const title = document.createElement("p");
+      title.textContent = quest.title;
+      title.classList.add("quest-title");
 
-function mirrorCurrentShape() {
-  currentShape.mirrored = !currentShape.mirrored;
-  const tmp = JSON.parse(JSON.stringify(currentShape));
-  for (let i = 0; i < tmp.shape.length; i++) {
-    for (let j = 0; j < tmp.shape.length; j++) {
-      tmp.shape[i][tmp.shape[0].length - j - 1] = currentShape.shape[i][j];
-    }
-  }
-  currentShape = tmp;
-}
+      const description = document.createElement("p");
+      description.textContent = quest.description;
+      description.classList.add("quest-description");
 
-function getRandomShape() {
-  return shapes[Math.floor(Math.random() * shapes.length)];
-}
+      const points = document.createElement("p");
+      if (quest.active) {
+        points.textContent = "Pontok:" + quest.points;
+      }
+      points.classList.add("quest-point-text");
 
-function deactiveQuests() {
-  for (quest of quests) {
-    quest.active = false;
-  }
-}
+      [title, description, points].forEach((element) =>
+        questElement.appendChild(element)
+      );
 
-// This function aligns the shape if it is out of bounds
-// This might happen if the shape is rotated or mirrored
-// Might be buggy if the shape is too big (so one in/decrement is not enough)
+      columns[index % 4].appendChild(questElement);
+    });
 
-function alignShapeIfOutOfBounds() {
-  while (minYOfShape() < 0) {
-    targetCenter.y++;
+    columns.forEach((col) => {
+      const row = document.createElement("div");
+      row.className = "quest-row";
+      row.appendChild(col);
+      questBar.appendChild(row);
+    });
   }
-  while (maxYOfShape() > TALBE_SIZE - 1) {
-    targetCenter.y--;
-  }
-  while (minXOfShape() < 0) {
-    targetCenter.x++;
-  }
-  while (maxXOfShape() > TALBE_SIZE - 1) {
-    targetCenter.x--;
-  }
-}
 
-// This function is called when the shape is settled
-function settleShape() {
-  // Add the shape to the table
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (currentShape.shape[i][j] == 1) {
-        tableContent[targetCenter.y - 1 + i][targetCenter.x - 1 + j] =
-          currentShape.type;
+  function drawSideBar() {
+    sideBar.innerHTML = "";
+    const shape = document.createElement("table");
+    const hour = document.createElement("p");
+    hour.textContent = "Idő: " + gameData.currentShape.time;
+    hour.className = "sidebar-text";
+
+    gameData.currentShape.shape.forEach((row, rowIndex) => {
+      const tr = document.createElement("tr");
+      row.forEach((cell, colIndex) => {
+        const td = document.createElement("td");
+        td.className = "cell";
+        td.id = `${rowIndex} ${colIndex}`;
+
+        if (cell === 1) {
+          td.style.backgroundImage = `url(${getImagePath(
+            gameData.currentShape.type
+          )})`;
+        }
+        tr.appendChild(td);
+      });
+      tr.className = "row";
+      shape.appendChild(tr);
+    });
+
+    sideBar.appendChild(shape);
+    sideBar.appendChild(hour);
+  }
+
+  function drawTable() {
+    for (let row in gameData.tableContent) {
+      for (let col in gameData.tableContent[row]) {
+        cell = tbody.rows[row].cells[col];
+
+        cell.style.backgroundImage = `url(${getImagePath(
+          gameData.tableContent[row][col]
+        )})`;
+        cell.className = "cell";
+        if (gameData.tableContent[row][col] == "mountain") {
+          cell.classList.add("mountain");
+        }
+        if (tileToWiggle.x == col && tileToWiggle.y == row) {
+          cell.classList.add("wiggle");
+        }
+        if (tileToDodge.x == col && tileToDodge.y == row) {
+          cell.classList.add("dodge");
+        }
+        if (tileToRotate.x == col && tileToRotate.y == row) {
+          cell.classList.add("rotate");
+        }
+        if (isTarget(col, row)) {
+          cell.classList.add("target-grid-cell");
+        }
+
+        if (inTargetArea(col, row)) {
+          cell.className = "cell target-cell";
+          cell.style.backgroundImage = `url(${getImagePath(
+            gameData.currentShape.type
+          )})`;
+          if (checkOverlap(col, row)) {
+            cell.classList.add("invalid-cell");
+          } else {
+            cell.classList.add("valid-cell");
+          }
+        }
       }
     }
   }
-  evalQuests();
-  // Decrease the time left and change the season if necessary
-  timeLeft -= currentShape.time;
-  if (timeLeft <= 0) {
-    timeLeft = 0;
-    winterPoints = globalPoints;
-    globalPoints = 0;
-  } else if (timeLeft <= 7) {
-    currentSeason = 3;
-    autumnPoints = globalPoints;
 
-    globalPoints = 0;
-  } else if (timeLeft <= 14) {
-    currentSeason = 2;
-    summerPoints = globalPoints;
-    globalPoints = 0;
-  } else if (timeLeft <= 21) {
-    currentSeason = 1;
-    springPoints = globalPoints;
-    globalPoints = 0;
-  }
-  // Change the quests if necessary
-  changeQuests();
-  // Get a new shape from the list, if the list is empty, mix it again
-  currentShape = shapes[0];
-  shapes.splice(0, 1);
-  if (shapes.length == 0) {
-    mixShapes();
-    currentShape = shapes[0];
-  }
-  saveGame();
-  if (timeLeft <= 0) {
-    gameOver(); //
-  }
-}
+  function initDrawTable() {
+    tbody.innerHTML = "";
+    for (let row in gameData.tableContent) {
+      let tr = document.createElement("tr");
+      for (let col in gameData.tableContent[row]) {
+        let cell = document.createElement("td");
+        cell.addEventListener("mouseover", mouseOverHandler);
+        cell.className = "cell";
+        cell.id = `${row} ${col}`; // add id to cell
+        cell.style.backgroundImage = `url(${getImagePath(
+          gameData.tableContent[row][col]
+        )})`;
+        if (tileToWiggle.x == col && tileToWiggle.y == row) {
+          cell.className = "cell wiggle";
+        }
 
-function objectTocode(obj) {
-  len = obj.length;
-  idxs = [];
-  // Fill the array with numbers from 0 to n
-  for (let i = 0; i < len; i++) {
-    idxs.push(i);
-  }
-  // Perform Fisher-Yates shuffle
-  for (let i = idxs.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [idxs[i], idxs[j]] = [idxs[j], idxs[i]]; // Swap elements
-  }
-  code = idxs.join("-");
-  return code;
-}
+        if (inTargetArea(col, row)) {
+          cell.className = "cell target-cell";
+          if (checkOverlap(col, row)) {
+            cell.className = "cell target-cell invalid-cell";
+          } else {
+            cell.style.backgroundImage = `url(${getImagePath(
+              gameData.currentShape.type
+            )})`;
+          }
+        }
 
-function generateShapecode() {
-  return objectTocode(default_shapes);
-}
-function generateQuestcode() {
-  let basicQuestcode = objectTocode(missions.basic);
-  let extraQuestcode = objectTocode(missions.extra);
-  q1 = basicQuestcode.split("-")[0];
-  q2 = basicQuestcode.split("-")[1];
-  q3 = extraQuestcode.split("-")[0];
-  q4 = extraQuestcode.split("-")[1];
-  code = q1 + "-" + q2 + "/" + q3 + "-" + q4;
-
-  return code;
-}
-
-// code generation for multiplayer
-function generatecode() {
-  let code = "";
-  for (i = 0; i < 4; i++) {
-    code += generateShapecode();
-    code += "/";
-  }
-  code = code.slice(0, -1);
-  code += "x";
-  code += generateQuestcode();
-
-  return code;
-}
-function contentFromcode(code) {
-  shapes = [];
-  quests = [];
-  const shapecodes = code.split("x")[0].split("/");
-  const questcodes = code.split("x")[1].split("/");
-  for (shapecode of shapecodes) {
-    shapecode = shapecode.split("-");
-    for (let i = 0; i < shapecode.length; i++) {
-      shapes.push(default_shapes[shapecode[i]]);
+        tr.appendChild(cell);
+      }
+      tbody.appendChild(tr);
     }
   }
 
-  basicQuestcode = questcodes[0].split("-");
-  extraQuestcode = questcodes[1].split("-");
-  const basicQuest1 = missions.basic[basicQuestcode[0]];
-  const basicQuest2 = missions.basic[basicQuestcode[1]];
-  const extraQuest1 = missions.extra[extraQuestcode[0]];
-  const extraQuest2 = missions.extra[extraQuestcode[1]];
+  function drawTimerAndSeasonBar() {
+    time.textContent = Math.max(gameData.timeLeft, 0);
+    timer.className = `timer ${SEASONS[gameData.currentSeason]}`;
 
-  quests.push(basicQuest1);
-  quests.push(basicQuest2);
-  quests.push(extraQuest1);
-  quests.push(extraQuest2);
+    springPointsE.textContent = points.spring;
+    summerPointsE.textContent = points.summer;
+    autumnPointsE.textContent = points.autumn;
+    winterPointsE.textContent = points.winter;
+  }
 
-  currentShape = shapes[0];
-  shapes.splice(0, 1);
-}
+  function draw() {
+    drawTable();
+    drawSideBar();
+    drawTimerAndSeasonBar();
+    drawQuestbar();
+  }
 
-// Random animations for a bit of fun
+  function saveGame() {
+    const dataToSave = {
+      tableContent: gameData.tableContent,
+      shapes: gameData.shapes,
+      targetCenter: gameData.targetCenter,
+      timeLeft: gameData.timeLeft,
+      currentSeason: gameData.currentSeason,
+      currentShape: gameData.currentShape,
+      globalPoints: points.global,
+      springPoints: points.spring,
+      summerPoints: points.summer,
+      autumnPoints: points.autumn,
+      winterPoints: points.winter,
+      quests: gameData.quests.map(({ title, points }) => ({ title, points })),
+    };
 
-function getRandomTile() {
-  const row = Math.floor(Math.random() * TALBE_SIZE);
-  const col = Math.floor(Math.random() * TALBE_SIZE);
-  return { x: col, y: row };
-}
+    Object.entries(dataToSave).forEach(([key, value]) => {
+      localStorage.setItem(key, JSON.stringify(value));
+    });
+  }
 
-function randomWiggle() {
-  tileToWiggle = getRandomTile();
-}
+  function loadGame() {
+    if (localStorage.getItem("tableContent") === null) {
+      return;
+    }
+    const localStorageKeys = [
+      "tableContent",
+      "shapes",
+      "targetCenter",
+      "timeLeft",
+      "currentSeason",
+      "currentShape",
+      "globalPoints",
+      "springPoints",
+      "summerPoints",
+      "autumnPoints",
+      "winterPoints",
+      "quests",
+    ];
 
-function randomDodge() {
-  tileToDodge = getRandomTile();
-}
+    const loadedData = localStorageKeys.reduce((data, key) => {
+      const item = localStorage.getItem(key);
+      if (item) {
+        data[key] = JSON.parse(item);
+      }
+      return data;
+    }, {});
 
-function randomRotate() {
-  tileToRotate = getRandomTile();
-}
+    {
+      gameData.tableContent = loadedData.tableContent;
+      gameData.shapes = loadedData.shapes;
+      gameData.targetCenter = loadedData.targetCenter;
+      gameData.timeLeft = loadedData.timeLeft;
+      gameData.currentSeason = loadedData.currentSeason;
+      gameData.currentShape = loadedData.currentShape;
+      points.global = loadedData.globalPoints;
+      points.spring = loadedData.springPoints;
+      points.summer = loadedData.summerPoints;
+      points.autumn = loadedData.autumnPoints;
+      points.winter = loadedData.winterPoints;
+      loadedQuests = loadedData.quests;
 
-function randomButtonShake() {
-  const buttons = [rotateButton, mirrorButton];
-  const events = ["wiggle", "dodge"];
-  const rndBtnIdx = Math.floor(Math.random() * buttons.length);
-  const rndEventIdx = Math.floor(Math.random() * events.length);
-  buttons[rndBtnIdx].classList.add(events[rndEventIdx]);
-  setTimeout(() => {
-    buttons[rndBtnIdx].classList.remove(events[rndEventIdx]);
-  }, 5000);
-}
-// Set random events with a suitable random time interval
-function setRandomEvent(func) {
-  setInterval(func, Math.max(Math.round(Math.random() * 20000), 5000));
-}
-setRandomEvent(randomWiggle);
-setRandomEvent(randomDodge);
-setRandomEvent(randomRotate);
-setRandomEvent(randomButtonShake);
-// Make sure that the table is redrawn every second
-setInterval(drawTable, 1000);
+      gameData.quests = missions.basic
+        .concat(missions.extra)
+        .map((quest) => {
+          const foundQuest = loadedQuests.find(
+            (loadedQuest) => loadedQuest.title === quest.title
+          );
+          if (foundQuest) {
+            quest.points = foundQuest.points;
+            return quest;
+          }
+        })
+        .filter(Boolean);
+
+      activateQuests();
+    }
+  }
+
+  function restart() {
+    localStorage.clear();
+    cleanData();
+    init();
+    draw();
+  }
+
+  function gameOver() {
+    gameData.currentShape = nullShape;
+    localStorage.clear();
+    draw();
+
+    const totalPoints =
+      points.spring +
+      points.summer +
+      points.autumn +
+      points.winter +
+      surroundedMountains();
+
+    setTimeout(() => {
+      const message =
+        `Játék vége!\nPontszámod: ${totalPoints} pont\n` +
+        `Tavasz: ${points.spring} pont\n` +
+        `Nyár: ${points.summer} pont\n` +
+        `Ősz: ${points.autumn} pont\n` +
+        `Tél: ${points.winter} pont\n` +
+        `Körbevett hegyek: ${surroundedMountains()} pont`;
+
+      alert(message);
+      restart();
+    }, 100);
+  }
+
+  function evalQuests() {
+    points.global = gameData.quests.reduce((total, quest) => {
+      quest.points = quest.active ? quest.eval(gameData.tableContent) : 0;
+      return total + quest.points;
+    }, 0);
+  }
+
+  function rotateCurrentShape() {
+    const n = gameData.currentShape.shape.length;
+    gameData.currentShape.rotation = (gameData.currentShape.rotation + 1) % 4;
+    const rotatedShape = Array.from({ length: n }, () => Array(n).fill(0));
+
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        rotatedShape[j][n - i - 1] = gameData.currentShape.shape[i][j];
+      }
+    }
+    gameData.currentShape.shape = rotatedShape;
+  }
+
+  function mirrorCurrentShape() {
+    const n = gameData.currentShape.shape.length;
+    gameData.currentShape.mirrored = !gameData.currentShape.mirrored;
+    const mirroredShape = Array.from({ length: n }, () => Array(n).fill(0));
+
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        mirroredShape[i][n - j - 1] = gameData.currentShape.shape[i][j];
+      }
+    }
+    gameData.currentShape.shape = mirroredShape;
+  }
+
+  function getRandomShape() {
+    return gameData.shapes[Math.floor(Math.random() * gameData.shapes.length)];
+  }
+
+  function deactiveQuests() {
+    for (quest of gameData.quests) {
+      quest.active = false;
+    }
+  }
+
+  // This function aligns the shape if it is out of bounds
+  // This might happen if the shape is rotated or mirrored
+  // Might be buggy if the shape is too big (so one in/decrement is not enough)
+
+  function alignShapeIfOutOfBounds() {
+    while (minYOfShape() < 0) {
+      gameData.targetCenter.y++;
+    }
+    while (maxYOfShape() > TABLE_SIZE - 1) {
+      gameData.targetCenter.y--;
+    }
+    while (minXOfShape() < 0) {
+      gameData.targetCenter.x++;
+    }
+    while (maxXOfShape() > TABLE_SIZE - 1) {
+      gameData.targetCenter.x--;
+    }
+  }
+
+  // This function is called when the shape is settled
+  function settleShape() {
+    // Add the shape to the table
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (gameData.currentShape.shape[i][j] == 1) {
+          gameData.tableContent[gameData.targetCenter.y - 1 + i][
+            gameData.targetCenter.x - 1 + j
+          ] = gameData.currentShape.type;
+        }
+      }
+    }
+    evalQuests();
+    // Decrease the time left and change the season if necessary
+    gameData.timeLeft -= gameData.currentShape.time;
+    if (gameData.timeLeft <= 0) {
+      gameData.timeLeft = 0;
+      points.winter = points.global;
+      points.global = 0;
+    } else if (gameData.timeLeft <= 7) {
+      gameData.currentSeason = 3;
+      points.autumn = points.global;
+
+      points.global = 0;
+    } else if (gameData.timeLeft <= 14) {
+      gameData.currentSeason = 2;
+      points.summer = points.global;
+      points.global = 0;
+    } else if (gameData.timeLeft <= 21) {
+      gameData.currentSeason = 1;
+      points.spring = points.global;
+      points.global = 0;
+    }
+    // Change the quests if necessary
+    deactivateQuests();
+    activateQuests();
+    // Get a new shape from the list, if the list is empty, mix it again
+    gameData.currentShape = gameData.shapes[0];
+    gameData.shapes.splice(0, 1);
+    saveGame();
+    if (gameData.timeLeft <= 0) {
+      gameOver(); //
+    }
+  }
+
+  function objectTocode(obj) {
+    len = obj.length;
+    idxs = [];
+    // Fill the array with numbers from 0 to n
+    for (let i = 0; i < len; i++) {
+      idxs.push(i);
+    }
+    // Perform Fisher-Yates shuffle
+    for (let i = idxs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [idxs[i], idxs[j]] = [idxs[j], idxs[i]]; // Swap elements
+    }
+    code = idxs.join("-");
+    return code;
+  }
+
+  function generateShapecode() {
+    return objectTocode(defaultShapes);
+  }
+  function generateQuestcode() {
+    let basicQuestcode = objectTocode(missions.basic);
+    let extraQuestcode = objectTocode(missions.extra);
+    q1 = basicQuestcode.split("-")[0];
+    q2 = basicQuestcode.split("-")[1];
+    q3 = extraQuestcode.split("-")[0];
+    q4 = extraQuestcode.split("-")[1];
+    code = q1 + "-" + q2 + "/" + q3 + "-" + q4;
+
+    return code;
+  }
+
+  function generateCode() {
+    let code = "";
+    for (i = 0; i < 4; i++) {
+      code += generateShapecode();
+      code += "/";
+    }
+    code = code.slice(0, -1);
+    code += "x";
+    code += generateQuestcode();
+
+    return code;
+  }
+  function contentFromCode(code) {
+    cleanData();
+    gameData.shapes = extractShapes(code);
+    gameData.quests = extractQuests(code);
+    gameData.currentShape = gameData.shapes[0];
+    gameData.shapes.splice(0, 1);
+    initializeTableContent();
+    addMountains();
+  }
+
+  function extractShapes(code) {
+    const shapeCodes = code.split("x")[0].split("/");
+    const extractedShapes = [];
+    for (let shapecode of shapeCodes) {
+      shapecode = shapecode.split("-");
+      for (let i = 0; i < shapecode.length; i++) {
+        extractedShapes.push(defaultShapes[shapecode[i]]);
+      }
+    }
+    return extractedShapes;
+  }
+
+  function extractQuests(code) {
+    const questCodes = code.split("x")[1].split("/");
+    const basicQuestcode = questCodes[0].split("-");
+    const extraQuestcode = questCodes[1].split("-");
+
+    const basicQuests = extractQuestArray(missions.basic, basicQuestcode);
+    const extraQuests = extractQuestArray(missions.extra, extraQuestcode);
+
+    return [...basicQuests, ...extraQuests];
+  }
+
+  function extractQuestArray(questSource, questCodes) {
+    const extractedQuests = [];
+    for (let code of questCodes) {
+      const quest = questSource[code];
+      if (quest) {
+        extractedQuests.push(quest);
+      }
+    }
+    return extractedQuests;
+  }
+
+  // Random animations for a bit of fun
+
+  function getRandomTile() {
+    return {
+      x: Math.floor(Math.random() * TABLE_SIZE),
+      y: Math.floor(Math.random() * TABLE_SIZE),
+    };
+  }
+  function randomButtonShake() {
+    const buttons = [rotateButton, mirrorButton];
+    const events = ["wiggle", "dodge"];
+    const rndBtnIdx = Math.floor(Math.random() * buttons.length);
+    const rndEventIdx = Math.floor(Math.random() * events.length);
+    buttons[rndBtnIdx].classList.add(events[rndEventIdx]);
+    setTimeout(() => {
+      buttons[rndBtnIdx].classList.remove(events[rndEventIdx]);
+    }, 5000);
+  }
+
+  const randomEvents = {
+    randomWiggle: function () {
+      tileToWiggle = getRandomTile();
+    },
+    randomDodge: function () {
+      tileToDodge = getRandomTile();
+    },
+    randomRotate: function () {
+      tileToRotate = getRandomTile();
+    },
+    randomButtonShake: randomButtonShake,
+  };
+  function setRandomEvent(func) {
+    setInterval(func, Math.max(Math.round(Math.random() * 20000), 5000));
+  }
+
+  //MAIN
+  init();
+  Object.values(randomEvents).forEach((func) => setRandomEvent(func));
+  setInterval(draw, 1000);
+});
