@@ -1500,6 +1500,7 @@ function contentFromSeed(seed) {
   quests.push(extraQuest2);
 
   currentShape = shapes[0];
+  shapes.splice(0, 1);
 }
 
 // Random animations for a bit of fun
