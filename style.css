@@ -408,6 +408,10 @@ body::-webkit-scrollbar {
     font-size: 0.9rem;
     text-align: center;
 }
+.marked-cell{
+    border-color : #fffb00c1;
+    border-width: 0.7vw;
+}
 
 
 @media (max-width: 1600px) {

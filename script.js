@@ -9,6 +9,7 @@ const missions = {
         "A térképed szélével szomszédos erdőmezőidért egy-egy pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "forest") {
@@ -19,6 +20,7 @@ const missions = {
                 j == TABLE_SIZE - 1
               ) {
                 points++;
+                this.tiles.push([i, j]);
               }
             }
           }
@@ -27,6 +29,7 @@ const missions = {
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Álmos-völgy",
@@ -34,6 +37,7 @@ const missions = {
         "Minden olyan sorért, amelyben három erdőmező van, négy-négy pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           let forestCount = 0;
           for (let j = 0; j < TABLE_SIZE; j++) {
@@ -43,33 +47,9 @@ const missions = {
           }
           if (forestCount == 3) {
             points += 4;
-          }
-        }
-        return points;
-      },
-      active: false,
-      points: 0,
-    },
-    {
-      title: "Krumpliöntözés",
-      description:
-        "A farmmezőiddel szomszédos vízmezőidért két-két pontot kapsz.",
-      eval: function (tableContent) {
-        let points = 0;
-        for (let i = 0; i < TABLE_SIZE; i++) {
-          for (let j = 0; j < TABLE_SIZE; j++) {
-            if (tableContent[i][j] == "farm") {
-              if (i > 0 && tableContent[i - 1][j] == "water") {
-                points += 2;
-              }
-              if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] == "water") {
-                points += 2;
-              }
-              if (j > 0 && tableContent[i][j - 1] == "water") {
-                points += 2;
-              }
-              if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] == "water") {
-                points += 2;
+            for (let j = 0; j < TABLE_SIZE; j++) {
+              if (tableContent[i][j] == "forest") {
+                this.tiles.push([i, j]);
               }
             }
           }
@@ -78,12 +58,54 @@ const missions = {
       },
       active: false,
       points: 0,
+      tiles: [],
+    },
+    {
+      title: "Krumpliöntözés",
+      description:
+        "A farmmezőiddel szomszédos vízmezőidért két-két pontot kapsz.",
+      eval: function (tableContent) {
+        let points = 0;
+        this.tiles = [];
+        let tmpTiles = [];
+        for (let i = 0; i < TABLE_SIZE; i++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
+            if (tableContent[i][j] == "farm") {
+              if (i > 0 && tableContent[i - 1][j] == "water") {
+                tmpTiles.push([i - 1, j]);
+              }
+              if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] == "water") {
+                tmpTiles.push([i + 1, j]);
+              }
+              if (j > 0 && tableContent[i][j - 1] == "water") {
+                tmpTiles.push([i, j - 1]);
+              }
+              if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] == "water") {
+                tmpTiles.push([i, j + 1]);
+              }
+            }
+          }
+        }
+        // Remove duplicates
+        tmpSet = new Set(tmpTiles.map((e) => JSON.stringify(e)));
+        tmpTiles = Array.from(tmpSet).map((e) => JSON.parse(e));
+
+        points = tmpTiles.length * 2;
+        this.tiles = tmpTiles;
+        return points;
+      },
+      active: false,
+      points: 0,
+      tiles: [],
     },
     {
       title: "Határvidék",
       description: "Minden teli sorért vagy oszlopért 6-6 pontot kapsz.",
       eval: function (tableContent) {
+        let fullRows = [];
+        let fullCols = [];
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           let rowFull = true;
           let colFull = true;
@@ -97,15 +119,29 @@ const missions = {
           }
           if (rowFull) {
             points += 6;
+            fullRows.push(i);
           }
           if (colFull) {
             points += 6;
+            fullCols.push(i);
           }
         }
+        for (row of fullRows) {
+          for (let i = 0; i < TABLE_SIZE; i++) {
+            this.tiles.push([row, i]);
+          }
+        }
+        for (col of fullCols) {
+          for (let i = 0; i < TABLE_SIZE; i++) {
+            this.tiles.push([i, col]);
+          }
+        }
+
         return points;
       },
       active: false,
       points: 0,
+      tiles: [],
     },
   ],
   extra: [
@@ -115,15 +151,21 @@ const missions = {
         "A leghosszabb, függőlegesen megszakítás nélkül egybefüggő erdőmezők mindegyikéért kettő-kettő pontot kapsz. Két azonos hosszúságú esetén csak az egyikért.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
+        let tmpTiles = [];
         let maxForestCount = 0;
         for (let i = 0; i < TABLE_SIZE; i++) {
           let forestCount = 0;
           for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[j][i] == "forest") {
               forestCount++;
+              tmpTiles.push([j, i]);
             } else {
               if (forestCount > maxForestCount) {
                 maxForestCount = forestCount;
+                this.tiles = tmpTiles;
+              } else {
+                tmpTiles = [];
               }
               forestCount = 0;
             }
@@ -137,6 +179,7 @@ const missions = {
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Gazdag város",
@@ -144,6 +187,7 @@ const missions = {
         "A legalább három különböző tereptípussal szomszédos falurégióidért három-három pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "town") {
@@ -174,6 +218,7 @@ const missions = {
               }
               if (typeCount >= 3) {
                 points += 3;
+                this.tiles.push([i, j]);
               }
             }
           }
@@ -182,6 +227,7 @@ const missions = {
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Öntözőcsatorna",
@@ -189,6 +235,7 @@ const missions = {
         "Minden olyan oszlopodért, amelyben a farm illetve a vízmezők száma megegyezik, négy-négy pontot kapsz. Mindkét tereptípusból legalább egy-egy mezőnek lennie kell az oszlopban ahhoz, hogy pontot kaphass érte.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           let farmCount = 0;
           let waterCount = 0;
@@ -202,12 +249,21 @@ const missions = {
           }
           if (farmCount == waterCount && farmCount > 0 && waterCount > 0) {
             points += 4;
+            for (let j = 0; j < TABLE_SIZE; j++) {
+              if (tableContent[j][i] == "farm") {
+                this.tiles.push([j, i]);
+              }
+              if (tableContent[j][i] == "water") {
+                this.tiles.push([j, i]);
+              }
+            }
           }
         }
         return points;
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Mágusok völgye",
@@ -215,20 +271,25 @@ const missions = {
         "A hegymezőiddel szomszédos vízmezőidért három-három pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "mountain") {
               if (i > 0 && tableContent[i - 1][j] == "water") {
                 points += 3;
+                this.tiles.push([i - 1, j]);
               }
               if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] == "water") {
                 points += 3;
+                this.tiles.push([i + 1, j]);
               }
               if (j > 0 && tableContent[i][j - 1] == "water") {
                 points += 3;
+                this.tiles.push([i, j - 1]);
               }
               if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] == "water") {
                 points += 3;
+                this.tiles.push([i, j + 1]);
               }
             }
           }
@@ -237,6 +298,7 @@ const missions = {
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Üres telek",
@@ -244,20 +306,25 @@ const missions = {
         "A városmezőiddel szomszédos üres mezőkért 2-2 pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           for (let j = 0; j < TABLE_SIZE; j++) {
             if (tableContent[i][j] == "town") {
               if (i > 0 && tableContent[i - 1][j] == 0) {
                 points += 2;
+                this.tiles.push([i - 1, j]);
               }
               if (i < TABLE_SIZE - 1 && tableContent[i + 1][j] == 0) {
                 points += 2;
+                this.tiles.push([i + 1, j]);
               }
               if (j > 0 && tableContent[i][j - 1] == 0) {
                 points += 2;
+                this.tiles.push([i, j - 1]);
               }
               if (j < TABLE_SIZE - 1 && tableContent[i][j + 1] == 0) {
                 points += 2;
+                this.tiles.push([i, j + 1]);
               }
             }
           }
@@ -266,6 +333,7 @@ const missions = {
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Sorház",
@@ -273,6 +341,7 @@ const missions = {
         "A leghosszabb, vízszintesen megszakítás nélkül egybefüggő falumezők mindegyikéért kettő-kettő pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         let maxTownCount = 0;
         for (let i = 0; i < TABLE_SIZE; i++) {
           let townCount = 0;
@@ -282,6 +351,10 @@ const missions = {
             } else {
               if (townCount > maxTownCount) {
                 maxTownCount = townCount;
+                this.tiles = [];
+                for (let k = 0; k < townCount; k++) {
+                  this.tiles.push([i, j - k - 1]);
+                }
               }
               townCount = 0;
             }
@@ -295,6 +368,7 @@ const missions = {
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Páratlan silók",
@@ -302,6 +376,7 @@ const missions = {
         "Minden páratlan sorszámú teli oszlopodért 10-10 pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i += 2) {
           let full = true;
           for (let j = 0; j < TABLE_SIZE; j++) {
@@ -311,12 +386,16 @@ const missions = {
           }
           if (full) {
             points += 10;
+            for (let j = 0; j < TABLE_SIZE; j++) {
+              this.tiles.push([j, i]);
+            }
           }
         }
         return points;
       },
       active: false,
       points: 0,
+      tiles: [],
     },
     {
       title: "Gazdag vidék",
@@ -324,6 +403,7 @@ const missions = {
         "Minden legalább öt különböző tereptípust tartalmazó sorért négy-négy pontot kapsz.",
       eval: function (tableContent) {
         let points = 0;
+        this.tiles = [];
         for (let i = 0; i < TABLE_SIZE; i++) {
           let types = [];
           for (let j = 0; j < TABLE_SIZE; j++) {
@@ -333,13 +413,66 @@ const missions = {
           }
           if (types.length >= 5) {
             points += 4;
+            for (let j = 0; j < TABLE_SIZE; j++) {
+              if (tableContent[i][j] != 0) {
+                this.tiles.push([i, j]);
+              }
+            }
           }
         }
         return points;
       },
       active: false,
       points: 0,
+      tiles: [],
     },
+    {
+      title: "Környezetvédelem",
+      description:
+        "Minden olyan területért, ahol egy erdőmező határos egy vízmezővel és egy városmezővel is 7 pontot kapsz.",
+      eval: function (tableContent) {
+        let points = 0;
+        this.tiles = [];
+        offsets = [
+          [0, 1],
+          [0, -1],
+          [1, 0],
+          [-1, 0],
+        ];
+
+        for (let i = 0; i < TABLE_SIZE; i++) {
+          for (let j = 0; j < TABLE_SIZE; j++) {
+            if (tableContent[i][j] == "forest") {
+              let neighbors = new Set();
+              for (offset of offsets) {
+                if (
+                  i + offset[0] >= 0 &&
+                  i + offset[0] < TABLE_SIZE &&
+                  j + offset[1] >= 0 &&
+                  j + offset[1] < TABLE_SIZE
+                ) {
+                  neighbors.add(tableContent[i + offset[0]][j + offset[1]]);
+                }
+              }
+              if (neighbors.has("water") && neighbors.has("town")) {
+                points += 7;
+                this.tiles.push([i, j]);
+              }
+            }
+          }
+        }
+
+        return points;
+      },
+      active: false,
+      points: 0,
+      tiles: [],
+    },
+    /*{
+      title: "Bányaváros",
+      description:
+        "A térképeden található egy darab bányamezőért 10 pontot kapsz.",
+    },*/ //TODO: implement, covering a mountain with a town gives 10 points, but you lose the mountain
   ],
 };
 
@@ -607,6 +740,7 @@ document.addEventListener("DOMContentLoaded", function () {
     quests: {},
     currentShape: nullShape,
     tableContent: [],
+    markedTiles: [],
   };
 
   let points = {
@@ -639,6 +773,8 @@ document.addEventListener("DOMContentLoaded", function () {
       quests: {},
       currentShape: nullShape,
       tableContent: [],
+      markedTiles: [],
+      lastMarkedQuestIndex: -1,
     };
 
     points = {
@@ -1020,10 +1156,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function initDraw() {
     initDrawTable();
     drawSideBar();
-    drawQuestbar();
+    initDrawQuestbar();
   }
-
-  function drawQuestbar() {
+  function initDrawQuestbar() {
     evalQuests();
     questBar.innerHTML = "";
     const col1 = document.createElement("div");
@@ -1054,10 +1189,29 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       points.classList.add("quest-point-text");
 
-      [title, description, points].forEach((element) =>
+      const button = document.createElement("button");
+      button.classList.add("button");
+      button.classList.add("quest-button");
+      button.id = "quest-button-" + index;
+      button.innerText = "Mutat";
+      button.addEventListener("click", function () {
+        gameData.markedTiles = [];
+        idx = parseInt(button.id.split("-")[2]);
+        if (gameData.lastMarkedQuestIndex === idx) {
+          gameData.lastMarkedQuestIndex = -1;
+          button.innerText = "Mutat";
+          return;
+        }
+
+        gameData.markedTiles = gameData.quests[idx].tiles;
+        gameData.lastMarkedQuestIndex = idx;
+        button.innerText = "Elrejt";
+      });
+
+      [title, description, points, button].forEach((element) =>
         questElement.appendChild(element)
       );
-
+      questElement.classList.add("quest");
       if (index < 2) {
         col1.appendChild(questElement);
       }
@@ -1068,6 +1222,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     questBar.appendChild(col1);
     questBar.appendChild(col2);
+  }
+
+  function drawQuestbar() {
+    const questElements = document.getElementsByClassName("quest");
+    for (let i = 0; i < questElements.length; i++) {
+      if (gameData.quests[i].active) {
+        questElements[i].classList.remove("inactive-quest");
+        questElements[i].classList.add(
+          seasonNames[gameData.currentSeason] + "-quest"
+        );
+      } else {
+        questElements[i].classList.remove(
+          seasonNames[gameData.currentSeason] + "-quest"
+        );
+        questElements[i].classList.add("inactive-quest");
+      }
+      const points =
+        questElements[i].getElementsByClassName("quest-point-text")[0];
+      if (gameData.quests[i].active) {
+        points.textContent = "Pontok:" + gameData.quests[i].points;
+      } else {
+        points.textContent = "";
+      }
+    }
   }
 
   function drawSideBar() {
@@ -1122,6 +1300,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         if (isTarget(col, row)) {
           cell.classList.add("target-grid-cell");
+        }
+        for (let tile of gameData.markedTiles) {
+          if (tile[1] == col && tile[0] == row) {
+            cell.classList.add("marked-cell");
+          }
         }
 
         if (inTargetArea(col, row)) {
